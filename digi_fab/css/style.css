@@ -57,7 +57,7 @@ span.blackback{
     gap: 20px;
     align-items: flex-start;
 }
-.images {
-    width: 45%;
+.images img {
+    width: 35%;
     height: auto;
 }
