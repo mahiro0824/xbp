@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>データ分析レポート</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Yu Gothic", "Meiryo", sans-serif;
+    color: #30495a;
+
+    background:
+    linear-gradient(
+        180deg,
+        #83c9ed 0%,
+        #c4e4f3 40%,
+        #75b8c9 70%,
+        #267c98 100%
+    );
+
+    background-attachment: fixed;
+}
+
+/* 背景 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+
+    background:
+    linear-gradient(
+        145deg,
+        transparent 38%,
+        rgba(103,135,148,0.3) 39%,
+        rgba(103,135,148,0.3) 46%,
+        transparent 47%
+    ),
+    linear-gradient(
+        215deg,
+        transparent 40%,
+        rgba(255,255,255,0.3) 41%,
+        rgba(255,255,255,0.3) 48%,
+        transparent 49%
+    );
+}
+
+/* ヘッダー */
+header {
+    text-align: center;
+    padding: 75px 20px 45px;
+}
+
+header .subtitle {
+    letter-spacing: 5px;
+    font-size: 15px;
+    color: #426c82;
+    font-weight: bold;
+}
+
+header h1 {
+    font-family: "Yu Mincho", serif;
+    font-size: 55px;
+    font-weight: normal;
+    color: #244b64;
+    margin: 15px 0;
+    letter-spacing: 10px;
+}
+
+header p {
+    color: #42677e;
+    font-size: 16px;
+}
+
+/* ナビゲーション */
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 10px auto 35px;
+    padding: 0 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #31586e;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.9);
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: #ffffff;
+    transform: translateY(-3px);
+}
+
+/* メイン */
+main {
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* 半透明パネル */
+.panel {
+    background: rgba(255,255,255,0.76);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.85);
+    border-radius: 25px;
+    padding: 35px;
+    margin-bottom: 35px;
+    box-shadow: 0 10px 30px rgba(40,90,120,0.12);
+}
+
+/* はじめに */
+.intro {
+    max-width: 800px;
+    margin: 0 auto 45px;
+}
+
+.intro h2 {
+    font-family: "Yu Mincho", serif;
+    font-size: 25px;
+    border-bottom: 1px solid #9bbdce;
+    padding-bottom: 12px;
+}
+
+.intro p {
+    line-height: 2.2;
+    font-size: 16px;
+}
+
+/* 分析の番号 */
+.number {
+    color: #438aa7;
+    font-size: 15px;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+.panel h2 {
+    font-family: "Yu Mincho", serif;
+    font-size: 26px;
+    color: #315d76;
+    margin-top: 12px;
+    margin-bottom: 25px;
+}
+
+/* グラフ */
+.graph {
+    background: #fffdf6;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 25px auto;
+    text-align: center;
+}
+
+.graph img {
+    display: block;
+    width: 100%;
+    max-width: 850px;
+    height: auto;
+    margin: auto;
+}
+
+/* 説明文 */
+.description {
+    font-size: 16px;
+    line-height: 2.2;
+    color: #405968;
+    margin-top: 25px;
+}
+
+/* 注目ポイント */
+.point {
+    background: rgba(111,177,205,0.18);
+    border-left: 5px solid #65a9c5;
+    padding: 17px 20px;
+    border-radius: 8px;
+    margin-top: 22px;
+    color: #315e75;
+    line-height: 1.8;
+}
+
+/* まとめ */
+.conclusion {
+    text-align: center;
+}
+
+.conclusion h2 {
+    font-family: "Yu Mincho", serif;
+}
+
+/* フッター */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #eaf7fc;
+    font-size: 13px;
+}
+
+/* スマホ対応 */
+@media (max-width: 600px) {
+
+    header {
+        padding-top: 50px;
+    }
+
+    header h1 {
+        font-size: 35px;
+        letter-spacing: 5px;
+    }
+
+    main {
+        width: 94%;
+    }
+
+    .panel {
+        padding: 22px 17px;
+    }
+
+    .panel h2 {
+        font-size: 21px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="subtitle">データ分析レポート</div>
+    <h1>データ分析</h1>
+    <p>データから見る利用者と売上の傾向</p>
+</header>
+
+<nav>
+    <a href="#analysis1">利用者分析</a>
+    <a href="#analysis2">曜日別売上</a>
+    <a href="#analysis3">顧客別分析</a>
+    <a href="#summary">まとめ</a>
+</nav>
+
+<main>
+
+    <!-- はじめに -->
+    <section class="panel intro">
+        <h2>はじめに</h2>
+        <p>
+            まず初めに、さまざまなデータを扱うことが
+            初めてだったので、どのような特徴があるのか
+            調べることから始めました。
+            今回は、利用者の種類や曜日ごとの売上に注目し、
+            データを分析しました。
+        </p>
+    </section>
+
+    <!-- 1つ目 -->
+    <section class="panel" id="analysis1">
+
+        <div class="number">分析 01</div>
+        <h2>顧客タイプ別の利用者数</h2>
+
+        <div class="graph">
+            <img src="images/kaisyaingaooi.png"
+                 alt="顧客タイプ別の利用者数">
+        </div>
+
+        <p class="description">
+            最初の図から、利用者の中では会社員が最も多く、
+            次に学生、観光客の順に多いことがわかる。
+            特に会社員の利用者数が多いことが特徴である。
+        </p>
+
+        <div class="point">
+            <strong>分析ポイント</strong><br>
+            会社員の利用者数が最も多く、全体の利用者を
+            大きく占めていることがわかった。
+        </div>
+
+    </section>
+
+    <!-- 2つ目 -->
+    <section class="panel" id="analysis2">
+
+        <div class="number">分析 02</div>
+        <h2>曜日別の売り上げ</h2>
+
+        <div class="graph">
+            <img src="images/youbi1.png"
+                 alt="曜日別の売り上げ">
+        </div>
+
+        <p class="description">
+            2つ目の図から、曜日別の売り上げを見ると、
+            月曜日から金曜日までの平日の売り上げが高く、
+            土曜日と日曜日は売り上げが低いことがわかった。
+        </p>
+
+        <div class="point">
+            <strong>分析ポイント</strong><br>
+            平日と休日では売り上げに大きな違いが
+            あることがわかった。
+        </div>
+
+    </section>
+
+    <!-- 3つ目 -->
+    <section class="panel" id="analysis3">
+
+        <div class="number">分析 03</div>
+        <h2>曜日別・顧客タイプ別の売り上げ</h2>
+
+        <div class="graph">
+            <img src="images/youbi2.png"
+                 alt="曜日別・顧客タイプ別の売り上げ">
+        </div>
+
+        <p class="description">
+            3つ目の図では、なぜ平日と休日で売り上げに
+            大きな差が生まれるのか気になり、
+            顧客タイプ別に分けて分析した。
+            その結果、平日は会社員と学生が多く、
+            土日は観光客の利用が多いことがわかった。
+        </p>
+
+        <div class="point">
+            <strong>分析ポイント</strong><br>
+            平日は会社員と学生、休日は観光客が中心となり、
+            曜日によって利用する顧客層が異なることがわかった。
+        </div>
+
+    </section>
+
+    <!-- まとめ -->
+    <section class="panel conclusion" id="summary">
+
+        <div class="number">まとめ</div>
+        <h2>今回の分析を通して</h2>
+
+        <p class="description">
+            今回の分析を通して、利用者の種類や曜日によって
+            売り上げに違いが生まれることがわかった。
+            分析では全体を見てから、自分の気になる部分をさらに詳しく調べられることが面白いと感じた。
+            データで様々な視点から見ることで、新たな発見につながることが分かった。
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    データ分析レポート
+</footer>
+
+</body>
+</html>
