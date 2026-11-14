@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>波と一体化</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Yu Gothic", "Meiryo", sans-serif;
+    color: #30495a;
+    background: linear-gradient(
+        180deg,
+        #83c9ed 0%,
+        #c4e4f3 40%,
+        #75b8c9 70%,
+        #267c98 100%
+    );
+    background-attachment: fixed;
+}
+
+/* 背景 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+    linear-gradient(
+        145deg,
+        transparent 38%,
+        rgba(103,135,148,0.3) 39%,
+        rgba(103,135,148,0.3) 46%,
+        transparent 47%
+    ),
+    linear-gradient(
+        215deg,
+        transparent 40%,
+        rgba(255,255,255,0.3) 41%,
+        rgba(255,255,255,0.3) 48%,
+        transparent 49%
+    );
+}
+
+/* ヘッダー */
+header {
+    text-align: center;
+    padding: 75px 20px 45px;
+}
+
+header .subtitle {
+    letter-spacing: 5px;
+    font-size: 15px;
+    color: #426c82;
+    font-weight: bold;
+}
+
+header h1 {
+    font-family: "Yu Mincho", serif;
+    font-size: 55px;
+    font-weight: normal;
+    color: #244b64;
+    margin: 15px 0;
+    letter-spacing: 10px;
+}
+
+header p {
+    color: #42677e;
+    font-size: 16px;
+}
+
+/* ナビゲーション */
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 10px auto 35px;
+    padding: 0 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #31586e;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.9);
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: #ffffff;
+    transform: translateY(-3px);
+}
+
+/* メイン */
+main {
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* パネル */
+.panel {
+    background: rgba(255,255,255,0.76);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.85);
+    border-radius: 25px;
+    padding: 35px;
+    margin-bottom: 35px;
+    box-shadow: 0 10px 30px rgba(40,90,120,0.12);
+}
+
+/* はじめに */
+.intro {
+    max-width: 800px;
+    margin: 0 auto 45px;
+}
+
+.intro h2 {
+    font-family: "Yu Mincho", serif;
+    font-size: 25px;
+    border-bottom: 1px solid #9bbdce;
+    padding-bottom: 12px;
+}
+
+.intro p {
+    line-height: 2.2;
+    font-size: 16px;
+}
+
+/* 番号 */
+.number {
+    color: #438aa7;
+    font-size: 15px;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+/* 見出し */
+.panel h2 {
+    font-family: "Yu Mincho", serif;
+    font-size: 26px;
+    color: #315d76;
+    margin-top: 12px;
+    margin-bottom: 25px;
+}
+
+/* 画像 */
+.graph {
+    background: #fffdf6;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 25px auto;
+    text-align: center;
+}
+
+.graph img {
+    display: block;
+    width: 100%;
+    max-width: 850px;
+    max-height: 600px;
+    height: auto;
+    object-fit: contain;
+    margin: auto;
+}
+
+/* 画像の説明 */
+.caption {
+    text-align: center;
+    color: #668394;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+/* 説明文 */
+.description {
+    font-size: 16px;
+    line-height: 2.2;
+    color: #405968;
+    margin-top: 25px;
+}
+
+/* 注目ポイント */
+.point {
+    background: rgba(111,177,205,0.18);
+    border-left: 5px solid #65a9c5;
+    padding: 17px 20px;
+    border-radius: 8px;
+    margin-top: 22px;
+    color: #315e75;
+    line-height: 1.8;
+}
+
+/* DXFファイル */
+.file-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 13px 28px;
+    background: #438aa7;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.file-link:hover {
+    background: #315d76;
+    transform: translateY(-3px);
+}
+
+.file-area {
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* 感想 */
+.conclusion {
+    text-align: center;
+}
+
+.conclusion h2 {
+    font-family: "Yu Mincho", serif;
+}
+
+/* フッター */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #eaf7fc;
+    font-size: 13px;
+}
+
+/* スマホ対応 */
+@media (max-width: 600px) {
+    header {
+        padding-top: 50px;
+    }
+
+    header h1 {
+        font-size: 35px;
+        letter-spacing: 5px;
+    }
+
+    main {
+        width: 94%;
+    }
+
+    .panel {
+        padding: 22px 17px;
+    }
+
+    .panel h2 {
+        font-size: 21px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .graph img {
+        max-height: 450px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="subtitle">DIGITAL FABRICATION</div>
+    <h1>波と一体化</h1>
+    <p>大切なブレスレットを飾るアクセサリースタンド</p>
+</header>
+
+<nav>
+    <a href="#intro">作品紹介</a>
+    <a href="#sketch">スケッチ</a>
+    <a href="#fusion">Fusion 360</a>
+    <a href="#process">制作過程</a>
+    <a href="#complete">完成作品</a>
+    <a href="#design">DXFファイル</a>
+    <a href="#summary">感想</a>
+</nav>
+
+<main>
+
+    <!-- 作品紹介 -->
+    <section class="panel intro" id="intro">
+
+        <h2>作品を作った理由</h2>
+
+        <p>
+            今回は、友達からもらった大切なブレスレットを
+            飾るためのアクセサリースタンドを制作しました。
+            以前からブレスレットを置く場所が決まって
+            いなかったため、波をモチーフにした置物に
+            飾ることで、ブレスレットが波と一体化するような
+            デザインにしたいと考えました。
+        </p>
+
+    </section>
+
+
+    <!-- 制作過程 01 -->
+    <section class="panel" id="sketch">
+
+        <div class="number">PROCESS 01</div>
+        <h2>スケッチ・デザインの考案</h2>
+
+        <div class="graph">
+            <img src="images/namisuketti1.jpeg"
+                 alt="最初に考えた波のデザインのスケッチ">
+            <p class="caption">最初に考えたデザインのスケッチ</p>
+        </div>
+
+        <p class="description">
+            最初は波を1枚だけで作ろうと考えていました。
+            しかし、波を2枚使って前後に配置することで、
+            平面的ではなく立体感のある波を表現できると
+            思い、このデザインにしました。
+        </p>
+
+    </section>
+
+
+    <!-- 制作過程 02 -->
+    <section class="panel" id="fusion">
+
+        <div class="number">PROCESS 02</div>
+        <h2>Fusion 360での設計</h2>
+
+        <div class="graph">
+            <img src="images/namifusion2.jpeg"
+                 alt="Fusion 360で作成した波の設計画面">
+            <p class="caption">Fusion 360での設計画面</p>
+        </div>
+
+        <p class="description">
+            今回はFusion 360を使って設計を行いました。
+            使用できる素材に限りがあったため、
+            最初に長方形で大まかなサイズを決め、
+            その範囲内に収まるように波の形や土台を
+            作成していきました。
+        </p>
+
+    </section>
+
+
+    <!-- 制作過程 03 -->
+    <section class="panel" id="process">
+
+        <div class="number">PROCESS 03</div>
+        <h2>Illustratorでの調整</h2>
+
+        <p class="description">
+            Fusion 360で作成したデザインをIllustratorで
+            調整した際、波を1枚だけで作ると厚みが
+            足りないことがわかりました。
+            そのため、波の部分をそれぞれ2枚ずつに変更し、
+            土台に差し込む溝の部分も2倍にしました。
+            このように変更することで、強度と立体感を
+            考えた設計にすることができました。
+        </p>
+
+    </section>
+
+
+    <!-- 完成前の部品 -->
+    <section class="panel">
+
+        <div class="number">PROCESS 04</div>
+        <h2>レーザーカット後の部品</h2>
+
+        <div class="graph">
+            <img src="images/namikansei1.jpeg"
+                 alt="レーザーカットで制作した部品">
+            <p class="caption">組み立てる前の部品</p>
+        </div>
+
+        <p class="description">
+            設計したデータをもとにレーザーカッターで
+            木材を加工しました。
+            波のパーツや土台など、それぞれの部品を
+            切り出して組み立ての準備をしました。
+        </p>
+
+    </section>
+
+
+    <!-- 組み立て後 -->
+    <section class="panel">
+
+        <div class="number">PROCESS 05</div>
+        <h2>組み立て後の様子</h2>
+
+        <div class="graph">
+            <img src="images/namikansei2.jpeg"
+                 alt="組み立て後のアクセサリースタンド">
+            <p class="caption">組み立て後の作品</p>
+        </div>
+
+        <p class="description">
+            それぞれの部品を土台に差し込んで組み立てると、
+            このような形になりました。
+            前後に配置した2枚の波によって、
+            波の立体感を表現することができました。
+        </p>
+
+    </section>
+
+
+    <!-- 3Dプリンター -->
+    <section class="panel">
+
+        <div class="number">PROCESS 06</div>
+        <h2>3Dプリンターを使った工夫</h2>
+
+        <p class="description">
+            最初の設計では、ブレスレットを引っかける部分を
+            作っていなかったため、3Dプリンターで
+            専用のパーツを制作して代用しました。
+            木材だけでは難しかった部分を3Dプリンターで
+            補うことで、実際にブレスレットを掛けられる
+            ように工夫しました。
+        </p>
+
+    </section>
+
+
+    <!-- 完成作品 -->
+    <section class="panel" id="complete">
+
+        <div class="number">COMPLETED WORK</div>
+        <h2>完成した作品</h2>
+
+        <div class="graph">
+            <img src="images/namikansei3.jpeg"
+                 alt="ブレスレットを掛けた完成作品">
+            <p class="caption">ブレスレットを掛けた完成作品</p>
+        </div>
+
+        <p class="description">
+            実際にブレスレットを掛けてみると、
+            波の形とブレスレットが組み合わさり、
+            作品全体の立体感がより増したように感じました。
+            最初に考えていた、ブレスレットが波と一体化するようなデザインに近づけることができました。
+        </p>
+
+        <div class="point">
+            <strong>作品のポイント</strong><br>
+            2枚の波を前後に配置することで立体感を出し、
+            3Dプリンターで制作したパーツを組み合わせることで、
+            実際にブレスレットを飾れる作品にしました。
+        </div>
+
+    </section>
+
+
+    <!-- DXFファイル -->
+    <section class="panel" id="design">
+
+        <div class="number">DESIGN FILE</div>
+        <h2>設計ファイル</h2>
+
+        <p class="description">
+            今回制作した「波と一体化」の設計データです。
+            Fusion 360で作成したデータをDXF形式で保存しました。
+            以下から設計ファイルを確認できます。
+        </p>
+
+        <div class="point">
+            <strong>設計データ</strong><br>
+            作品名：波と一体化<br>
+            ファイル形式：DXF
+        </div>
+
+        <div class="file-area">
+            <a href="files/akuba.dxf"
+               class="file-link"
+               download>
+               DXFファイルをダウンロード
+            </a>
+        </div>
+
+    </section>
+
+
+    <!-- 感想 -->
+    <section class="panel conclusion" id="summary">
+
+        <div class="number">IMPRESSION</div>
+        <h2>制作を終えて</h2>
+
+        <p class="description">
+            今回は前回とは素材が異なり、使用できる素材にも
+            制限があったため、その条件の中で作品を作ることは
+            難しかったです。また、最初に考えた自分が
+            本当に作りたかったものに近づけることも
+            簡単ではありませんでした。
+            しかし、最終的には3Dプリンターも活用して
+            作品を完成させることができ、自分なりに
+            良いものを作ることができたと思います。
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    DIGITAL FABRICATION | 波と一体化
+</footer>
+
+</body>
+</html>
